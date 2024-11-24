@@ -1,70 +1,69 @@
-# DevOps Directive Kubernetes Course
+# [Complete Kubernetes Course Notes](https://www.youtube.com/watch?v=2T86xAtR6Fo&t=1382s)
 
-This is the companion repo to: [Complete Kubernetes Course -- From BEGINNER to PRO
-](https://www.youtube.com/watch?v=2T86xAtR6Fo)
+# Tools
 
-[![thumbnail](./readme-assets/thumbnail.jpg)](https://www.youtube.com/watch?v=2T86xAtR6Fo)
+## [Docker Desktop](https://docs.docker.com/desktop/setup/install/linux/ubuntu/) 
 
-## Using this repo
+### Run
 
-Each directory within the repo corresponds to one section of the course. You should fork the repo and follow along with the lessons and use/update/modify the code samples as needed.
+systemctl \--user start docker-desktop
 
-There are a number of software tools used throughout the course. Instructions on the best way to set them up can be found in [03-installation-and-setup](03-installation-and-setup/README.md).
+## [Devbox](https://www.jetify.com/docs/devbox/quickstart/)
 
-## Course Sections
+This can run a vm within a project folder that also tracks packages specific to the environment
 
-### [01 - History and Motivation](01-history-and-motivation/README.md)
+### Setup a Project Folder
 
-Examines the evolution of software operations and how it has led to container orchestration + Kubernetes.
+devbox init  
+devbox add {package@version}
 
-### [02 - Technology Overview](02-technology-overview/README.md)
+### Run
 
-Provides a high-level overview of Kubernetes architecture and key concepts such as nodes, control plane, and data plane.
+devbox shell
 
-### [03 - Installation and Setup](03-installation-and-setup/README.md)
+# Course
 
-Guides you through setting up your environment and installing necessary tools for the course.
+Using CDKTF instead of Civo then set up your VPC [here](https://medium.com/@stevosjt88/setting-up-an-aws-vpc-using-cdktf-3bab8f6b23dd) then deploy EKS [here](https://medium.com/@stevosjt88/creating-an-eks-cluster-using-cdktf-ed6cf28599c9) then Karpenter [here](https://medium.com/@stevosjt88/creating-an-eks-cluster-using-cdktf-karpenter-addon-7275f25aa52c)
 
-### [04 - Built-in Resource Types](04-built-in-resource-types/README.md)
+## Setup Project Folder
 
-Covers the fundamental resource types provided by Kubernetes and how to use them.
+Create a project folder (eg: devops-directive-kubernetes-course2)  
+cd devops-directive-kubernetes-course2
 
-### [05 - Helm](05-helm/README.md)
+### Install CDKTF in devbox
 
-Introduces Helm and how to use it for your own applications and installing 3rd party applications.
+devbox add nodePackages.cdktf-cli  
+cdktf init
 
-### [06 - Demo Application](06-demo-application/README.md)
+Create a folder adjacent to the project folder    
+git clone [https://github.com/sidpalas/devops-directive-kubernetes-course](https://github.com/sidpalas/devops-directive-kubernetes-course)  
+Copy all contents of devops-directive-kubernetes-course2 into devops-directive-kubernetes-course  
+Delete the devops-directive-kubernetes-course2 folder
 
-Walks you through a 3 tier web application we will use as the basis for furthering our understanding of deploying with Kubernetes.
+## Start the Course
 
-### [07 - Deploying Demo Application](07-deploying-demo-application/README.md)
+cd [devops-directive-kubernetes-course](https://github.com/sidpalas/devops-directive-kubernetes-course)   
+devbox shell  
+devbox list  
+task \--list-all \# (or just run tl) lists a number of KinD tasks the instructor built
 
-Contains the resource manifests to deploy the demo application to Kubernetes.
+## Working with KinD
 
-### [08 - Extending Kubernetes](08-extending-kubernetes/README.md)
+### Generate KinD Config
 
-Discusses how applications use custom resource definitions and operators to extend Kubernetes functionalities.
+cd 03-installation-and-setup  
+task kind:01-generate-config
 
-### [09 - Deploying Auxiliary Tooling](09-deploying-auxiliary-tooling/README.md)
+### Create Cluster
 
-Deploys useful 3rd party tools that enhance your Kubernetes environment.
+kind create cluster \--config kind-config.yaml  
+kubectl get nodes  
+kubectl get pods \-A
 
-### [10 - Developer Experience](10-developer-experience/README.md)
+### Replace Civo with CDKTF
 
-Focuses on improving the developer experience when working with Kubernetes.
+Add this block to devbox.json:
 
-### [11 - Debugging](11-debugging/README.md)
-
-Teaches techniques for debugging issues within your Kubernetes cluster.
-
-### [12 - Deploying to Multiple Environments](12-deploying-to-multiple-environments/README.md)
-
-Explores strategies for deploying applications to multiple environments using Kubernetes.
-
-### [13 - Cluster and Node Upgrades](13-cluster-and-node-upgrades/README.md)
-
-Provides guidance on performing upgrades to your Kubernetes clusters and nodes.
-
-### [14 - CI/CD](14-cicd/README.md)
-
-Discusses how to implement continuous integration and continuous delivery (CI/CD) systems for Kubernetes based applications.
+"env": {  
+    "AWS\_PROFILE": "kubernetesCourse"  
+ }
