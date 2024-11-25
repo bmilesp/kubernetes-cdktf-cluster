@@ -103,7 +103,7 @@ export class NetworkStack extends TerraformStack {
         publicSubnetIds.forEach((id) => {
             count++;
             const eip = new Eip(this, `eip-${count}`, {
-                vpc: true,
+                domain: "vpc"
             });
 
             const gw = new NatGateway(this, `nat-gateway-${count}`, {
