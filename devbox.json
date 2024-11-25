@@ -39,6 +39,7 @@
     }
   },
   "env": {
-    "AWS_PROFILE": "kubernetesCourse"
+    "AWS_PROFILE": "kubernetesCourse",
+    "GO111MODULE": "on"
   }
 }
