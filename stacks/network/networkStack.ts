@@ -1,5 +1,5 @@
 import { Subnet } from "@cdktf/provider-aws/lib/subnet";
-import { App, TerraformStack } from "cdktf";
+import { App, S3Backend, TerraformStack } from "cdktf";
 import { AwsProvider } from "@cdktf/provider-aws/lib/provider";
 import { Vpc } from "@cdktf/provider-aws/lib/vpc";
 import { InternetGateway } from "@cdktf/provider-aws/lib/internet-gateway";
@@ -15,9 +15,13 @@ export class NetworkStack extends TerraformStack {
     public readonly privateSubnetIds: string[];
     private readonly region:string;
 
-    constructor(app: App, region: string, name: string) {
+    constructor(app: App, backendStateS3BucketName:string, region: string, name: string) {
         super(app, "networkStack");
-
+        new S3Backend(this, {
+            bucket: backendStateS3BucketName,
+            key: name,
+            region: region
+          })
         new AwsProvider(this, "aws", { region: region });
         this.region = region;
         const vpcCidr = "10.0.0.0/20";

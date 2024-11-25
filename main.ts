@@ -17,6 +17,7 @@ new TFStateBackupStack(
 
 new NetworkStack(
   app,
+  backendStateS3BucketName,
   "us-west-2",
   "kubernetesCourse"
 )
