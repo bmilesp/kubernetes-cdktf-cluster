@@ -8,7 +8,7 @@ import { Eip } from "@cdktf/provider-aws/lib/eip";
 import { NatGateway } from "@cdktf/provider-aws/lib/nat-gateway";
 import { RouteTableAssociation } from "@cdktf/provider-aws/lib/route-table-association";
 
-export class Network extends TerraformStack {
+export class NetworkStack extends TerraformStack {
 
     public readonly vpcId: string;
     public readonly publicSubnetIds: string[];
@@ -16,7 +16,7 @@ export class Network extends TerraformStack {
     private readonly region:string;
 
     constructor(app: App, region: string, name: string) {
-        super(app, "network");
+        super(app, "networkStack");
 
         new AwsProvider(this, "aws", { region: region });
         this.region = region;

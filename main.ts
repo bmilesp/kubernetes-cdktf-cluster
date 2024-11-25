@@ -1,16 +1,25 @@
 import { App } from "cdktf"
-import { Network } from "./stacks/network";
-
-//import { TFStateBackupStack } from './stacks/tfStateBackup/TFStateBackupStack' 
+import { NetworkStack } from "./stacks/network/networkStack";
+import { TFStateBackupStack } from "./stacks/tfStateBackup/TFStateBackupStack";
 
 // Construct the app
 const app = new App();
+const backendStateS3BucketName = "kubernetes-course-tf-state-backup-bucket"
+const region = "us-west-2"
+// TFStateBackupStack 
+new TFStateBackupStack(
+  app,
+  "tfStateBackupStack",
+  backendStateS3BucketName,
+  region,
+  true
+)
 
-
-new Network(
+new NetworkStack(
   app,
   "us-west-2",
   "kubernetesCourse"
 )
+
 
 app.synth();
