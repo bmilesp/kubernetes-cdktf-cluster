@@ -67,3 +67,7 @@ Add this block to devbox.json:
 "env": {  
     "AWS\_PROFILE": "kubernetesCourse"  
  }
+
+
+#TODO
+When you create the app, try upgrading EKS to version 1.31 to see if updating works as expected

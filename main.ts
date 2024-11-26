@@ -1,6 +1,7 @@
 import { App } from "cdktf"
 import { NetworkStack } from "./stacks/network/networkStack";
 import { TFStateBackupStack } from "./stacks/tfStateBackup/TFStateBackupStack";
+import { EksStack } from "./stacks/eks/eksStack";
 
 // Construct the app
 const app = new App();
@@ -9,18 +10,28 @@ const region = "us-west-2"
 // TFStateBackupStack 
 new TFStateBackupStack(
   app,
-  "tfStateBackupStack",
   backendStateS3BucketName,
   region,
+  "tfStateBackupStack",
   true
 )
 
-new NetworkStack(
+const networkStack = new NetworkStack(
   app,
   backendStateS3BucketName,
-  "us-west-2",
+  region,
   "kubernetesCourse"
 )
+
+const eksStack = new EksStack(
+  app,  
+  backendStateS3BucketName,
+  region,
+  "eksStack",
+  networkStack
+);
+
+eksStack.addDependency(networkStack);
 
 
 app.synth();

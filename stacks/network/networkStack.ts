@@ -15,7 +15,7 @@ export class NetworkStack extends TerraformStack {
     public readonly privateSubnetIds: string[];
     private readonly region:string;
 
-    constructor(app: App, backendStateS3BucketName:string, region: string, name: string) {
+    constructor(app: App, backendStateS3BucketName:string, region: string, name: string ) {
         super(app, "networkStack");
         new S3Backend(this, {
             bucket: backendStateS3BucketName,
